@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3021",
+    "dev": "next dev -p 3043",
     "build": "next build",
-    "start": "next start -p 3021",
+    "start": "next start -p 3044",
     "seed": "node --env-file=.env --experimental-strip-types seed.ts",
     "lint": "next lint"
   },
