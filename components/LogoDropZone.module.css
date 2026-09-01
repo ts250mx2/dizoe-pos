@@ -1,0 +1,61 @@
+.dropZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1.25rem 1rem;
+  border: 2px dashed var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
+  transition: var(--ease);
+}
+
+.dropZone:hover,
+.dropZoneActive {
+  border-color: var(--gold);
+  color: var(--gold-deep);
+  box-shadow: 0 0 16px var(--gold-glow);
+}
+
+.dropZone span {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.dropZone small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.logoPreview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoPreview img {
+  max-height: 90px;
+  max-width: 220px;
+  object-fit: contain;
+  border-radius: var(--r-sm);
+}
+
+.logoRemove {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--danger);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}

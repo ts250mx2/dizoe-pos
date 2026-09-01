@@ -1,0 +1,200 @@
+/* Cart */
+.cart {
+  width: 340px;
+  min-width: 320px;
+  height: calc(100vh - 66px);
+  position: sticky;
+  top: 66px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.accountSelector {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.accountBtn {
+  flex: 1;
+  padding: 0.55rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  position: relative;
+  transition: var(--ease);
+}
+.accountBtn:hover { background: var(--surface-2); color: var(--gold); }
+.activeAccount {
+  color: var(--gold);
+  background: rgba(201,168,76,0.1);
+  border-bottom: 2px solid var(--gold);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold);
+  color: #0f0d0b;
+  border-radius: 99px;
+  width: 18px; height: 18px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-left: 4px;
+  position: relative;
+  top: -1px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.65rem;
+  border-radius: var(--r);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.itemThumb {
+  width: 44px; height: 44px;
+  border-radius: var(--r-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.itemThumbEmpty {
+  width: 44px; height: 44px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.1));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; font-weight: 800;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.itemDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemName {
+  font-size: 0.83rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemMeta {
+  font-size: 0.75rem;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+.itemControls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.itemPrice {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 2px 4px;
+}
+
+.qtyBtn {
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+  transition: var(--ease);
+}
+.qtyBtn:hover { background: rgba(201,168,76,0.12); color: var(--gold); }
+.quantity span { font-size: 0.85rem; font-weight: 600; min-width: 18px; text-align: center; }
+
+.footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.totalRow {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.checkoutBtn {
+  width: 100%;
+  margin-top: 0.85rem;
+  padding: 0.85rem;
+  border-radius: var(--r);
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: #0f0d0b;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: var(--ease);
+  box-shadow: 0 4px 16px rgba(201,168,76,0.35);
+}
+.checkoutBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201,168,76,0.5);
+}
+.checkoutBtn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }

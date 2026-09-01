@@ -1,0 +1,47 @@
+.ticket {
+  width: 58mm; /* Thermal printer width */
+  margin: 0 auto;
+  padding: 5mm;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  color: #000;
+  background: #fff;
+  line-height: 1.4;
+}
+
+@media print {
+  body { background: #fff; }
+  .ticket { width: 100%; padding: 0; }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.divider {
+  border-bottom: 1px dashed #000;
+  margin: 8px 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.items {
+  margin: 10px 0;
+}
+
+.item {
+  margin-bottom: 6px;
+}
+
+.footer {
+  text-align: center;
+}

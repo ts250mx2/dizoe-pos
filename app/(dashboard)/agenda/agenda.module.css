@@ -1,0 +1,576 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.titleGroup h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: #0f0d0b;
+  font-weight: 700;
+  border-radius: var(--r);
+  box-shadow: 0 4px 12px rgba(201,168,76,0.3);
+}
+
+.calendarWrap {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendarHeader {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(201,168,76,0.05);
+  border-bottom: 1px solid var(--border);
+}
+
+.monthName {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.navBtns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navBtns button {
+  color: var(--text-muted);
+  transition: var(--ease);
+}
+
+.navBtns button:hover {
+  color: var(--gold);
+}
+
+.todayBtn {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+}
+
+.weekDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.weekDays div {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--border);
+  gap: 1px;
+}
+
+.dayCell, .dayCellEmpty {
+  min-height: 120px;
+  background: var(--surface);
+  padding: 0.5rem;
+}
+
+.dayCell {
+  cursor: pointer;
+  transition: var(--ease);
+}
+
+.dayCell:hover {
+  background: var(--surface-2);
+}
+
+.today {
+  background: rgba(201,168,76,0.05);
+}
+
+.today .dayNumber {
+  background: var(--gold);
+  color: #0f0d0b;
+}
+
+.dayNumber {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.dayCitas {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.citaBadge {
+  font-size: 0.65rem;
+  padding: 4px 6px;
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-left: 2px solid var(--gold);
+  font-weight: 600;
+}
+
+.completed {
+  background: rgba(34,197,94,0.15);
+  color: #22c55e;
+  border-left-color: #22c55e;
+  text-decoration: line-through;
+}
+
+.cancelled {
+  background: rgba(231,76,60,0.15);
+  color: #e74c3c;
+  border-left-color: #e74c3c;
+  opacity: 0.6;
+}
+
+/* Vista de día (calendario de horas) */
+.dayModal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.dayModalActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dayNewBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--r);
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: #0f0d0b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: var(--ease);
+}
+
+.dayNewBtn:hover {
+  box-shadow: 0 4px 14px rgba(201,168,76,0.45);
+}
+
+.dayHours {
+  overflow-y: auto;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.hourRow {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  border-top: 1px solid var(--border);
+}
+
+.hourRow:first-child {
+  border-top: none;
+}
+
+.hourLabel {
+  padding: 0.6rem 0.5rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.hourSlot {
+  min-height: 52px;
+  padding: 0.45rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: var(--ease);
+  border-radius: var(--r-sm);
+}
+
+.hourSlot:hover {
+  background: rgba(201,168,76,0.06);
+}
+
+.hourEmpty {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: var(--ease);
+  align-self: flex-start;
+  margin-top: 0.35rem;
+}
+
+.hourSlot:hover .hourEmpty {
+  opacity: 1;
+  color: var(--gold-deep);
+}
+
+.dayCita {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.5rem 0.75rem;
+  background: rgba(201,168,76,0.12);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: var(--ease);
+}
+
+.dayCita:hover {
+  background: rgba(201,168,76,0.22);
+}
+
+.dayCitaTime {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+}
+
+.dayCitaName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dayCitaTitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.dayCita.completed {
+  background: rgba(34,197,94,0.12);
+  border-left-color: #22c55e;
+  text-decoration: none;
+}
+
+.dayCita.completed .dayCitaTime,
+.dayCita.completed .dayCitaName {
+  color: #22c55e;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  width: 100%;
+  max-width: 500px;
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.modalHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalHeader h3 {
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.modalBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.inputGroup label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.searchWrap {
+  position: relative;
+}
+
+.selectedCliente {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid var(--gold);
+  border-radius: var(--r);
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: var(--shadow-lg);
+}
+
+.option {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: var(--ease);
+  font-size: 0.9rem;
+}
+
+.option:hover {
+  background: rgba(201,168,76,0.05);
+  color: var(--gold);
+}
+
+.optionDetail {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.optionEmpty {
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.selectedClienteDetail {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.newClientBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--r);
+  border: 1px dashed var(--gold);
+  background: rgba(201,168,76,0.06);
+  color: var(--gold-deep);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--ease);
+}
+
+.newClientBtn:hover {
+  background: rgba(201,168,76,0.14);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.newClientForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border: 1px solid var(--gold);
+  border-radius: var(--r);
+  background: rgba(201,168,76,0.05);
+}
+
+.newClientTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold-deep);
+}
+
+.newClientField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  color: var(--text-muted);
+}
+
+.newClientField input {
+  flex: 1;
+  min-width: 0;
+}
+
+.newClientError {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+.newClientActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.newClientCancel {
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--r);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: var(--ease);
+}
+
+.newClientCancel:hover {
+  color: var(--text);
+}
+
+.newClientSave {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--r);
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: #0f0d0b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: var(--ease);
+}
+
+.newClientSave:hover:not(:disabled) {
+  box-shadow: 0 4px 14px rgba(201,168,76,0.45);
+}
+
+.newClientSave:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modalFooter {
+  padding: 1.5rem;
+  background: var(--surface-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.statusActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.completeBtn {
+  background: #22c55e;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--r);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cancelBtn {
+  background: rgba(231,76,60,0.1);
+  color: #e74c3c;
+  padding: 0.6rem 1rem;
+  border-radius: var(--r);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.saveBtn {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: #0f0d0b;
+  font-weight: 700;
+  border-radius: var(--r);
+  margin-left: auto;
+}

@@ -1,0 +1,45 @@
+.container { max-width: 1280px; margin: 0 auto; display: grid; gap: 1.5rem; }
+.header { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.eyebrow { color: var(--gold); font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.header h1 { margin: .25rem 0; font-size: clamp(2rem, 4vw, 3rem); line-height: 1; letter-spacing: -.045em; }
+.header p { color: var(--text-muted); font-size: .9rem; }
+.summaryGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.summaryCard { position: relative; min-height: 118px; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow); }
+.summaryCard span { color: var(--text-muted); font-size: .78rem; font-weight: 650; }
+.summaryCard strong { font-size: 2rem; }
+.summaryCard svg { position: absolute; right: 1rem; bottom: 1rem; color: var(--gold); }
+.warningCard { border-color: rgba(217,185,95,.42); }
+.dangerCard { border-color: rgba(231,76,60,.35); }
+.dangerCard svg { color: var(--danger); }
+.inventoryPanel, .historyPanel { padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow); }
+.toolbar { display: flex; gap: .8rem; margin-bottom: 1.2rem; }
+.searchBox { flex: 1; position: relative; }
+.searchBox svg { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+.searchBox input { padding-left: 2.7rem; }
+.filterBtn { display: flex; align-items: center; gap: .45rem; padding: 0 1rem; border: 1px solid var(--border); border-radius: var(--r); color: var(--text-muted); }
+.filterActive { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
+.productGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: .9rem; }
+.productCard { padding: 1rem; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface-2); }
+.lowProduct { border-color: rgba(231,76,60,.38); }
+.productTop { min-height: 24px; display: flex; justify-content: space-between; gap: .5rem; }
+.category { color: var(--text-muted); font-size: .7rem; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; }
+.lowBadge { padding: .18rem .45rem; border-radius: 99px; background: rgba(231,76,60,.12); color: var(--danger); font-size: .65rem; font-weight: 750; }
+.productCard h2 { margin: .65rem 0 1rem; min-height: 42px; font-size: 1rem; }
+.stockLine { display: flex; align-items: baseline; gap: .45rem; }
+.stockLine strong { color: var(--gold); font-size: 1.85rem; line-height: 1; }
+.stockLine span, .minimum { color: var(--text-muted); font-size: .72rem; }
+.minimum { margin-top: .35rem; }
+.actions { display: grid; grid-template-columns: 1fr 1fr auto; gap: .45rem; margin-top: 1rem; }
+.actions button { min-height: 36px; display: flex; align-items: center; justify-content: center; gap: .35rem; padding: .4rem .55rem; border: 1px solid var(--border); border-radius: .55rem; color: var(--text); font-size: .72rem; font-weight: 700; }
+.actions button:first-child { color: #3e8b72; }.actions button:nth-child(2) { color: #b66a42; }.actions button:hover { border-color: var(--gold); background: var(--gold-glow); }
+.empty { min-height: 210px; display: grid; place-items: center; align-content: center; gap: .4rem; color: var(--text-muted); text-align: center; }
+.sectionTitle { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.sectionTitle div { display: flex; align-items: center; gap: .55rem; }.sectionTitle h2 { font-size: 1.05rem; }.sectionTitle svg { color: var(--gold); }.sectionTitle > span { color: var(--text-muted); font-size: .7rem; }
+.tableScroll { overflow-x: auto; }.tableScroll table { width: 100%; border-collapse: collapse; font-size: .78rem; }.tableScroll th { padding: .7rem; color: var(--gold); text-align: left; font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; }.tableScroll td { padding: .75rem .7rem; border-top: 1px solid var(--border); white-space: nowrap; }
+.movementBadge { padding: .22rem .48rem; border-radius: 99px; font-size: .62rem; font-weight: 800; }.entrada { color: #3e8b72; background: rgba(62,139,114,.12); }.salida { color: #b85e42; background: rgba(184,94,66,.12); }.ajuste { color: var(--gold-deep); background: var(--gold-glow); }.positive { color: #3e8b72; }.negative { color: #b85e42; }
+.modalOverlay { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 1rem; background: rgba(0,0,0,.72); backdrop-filter: blur(6px); }
+.modal { width: min(440px, 100%); padding: 1.4rem; display: grid; gap: 1rem; border: 1px solid rgba(217,185,95,.38); border-radius: var(--r-xl); background: var(--surface); box-shadow: var(--shadow-lg); }
+.modalHeader { display: flex; justify-content: space-between; }.modalHeader span { color: var(--gold); font-size: .65rem; font-weight: 750; text-transform: uppercase; }.modalHeader h2 { margin-top: .2rem; font-size: 1.2rem; }.currentStock { display: flex; justify-content: space-between; padding: .8rem; border-radius: .6rem; background: var(--surface-2); color: var(--text-muted); font-size: .8rem; }.currentStock strong { color: var(--gold); }
+.typeSelector { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; }.typeSelector button { padding: .65rem; border: 1px solid var(--border); border-radius: .55rem; color: var(--text-muted); font-size: .72rem; font-weight: 750; }.typeSelector .selectedType { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
+.modal label { display: grid; gap: .4rem; color: var(--text-muted); font-size: .75rem; font-weight: 700; }.error { padding: .7rem; border-radius: .55rem; background: rgba(231,76,60,.1); color: var(--danger); font-size: .78rem; }.saveBtn { padding: .85rem; border-radius: .6rem; background: linear-gradient(135deg,var(--gold),var(--gold-deep)); color: #11110f; font-weight: 800; }.saveBtn:disabled { opacity: .55; }
+@media (max-width: 700px) { .summaryGrid { grid-template-columns: 1fr; }.toolbar { flex-direction: column; }.filterBtn { min-height: 42px; justify-content: center; }.header svg { display: none; }.inventoryPanel, .historyPanel { padding: .85rem; }.productGrid { grid-template-columns: 1fr; } }
