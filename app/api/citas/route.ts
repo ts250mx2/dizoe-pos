@@ -36,7 +36,7 @@ export async function GET(request: Request) {
     const params: any[] = [];
 
     if (start && end) {
-      query += ` AND FechaCita BETWEEN ? AND ?`;
+      query += ` AND FechaCita >= ? AND FechaCita < DATE_ADD(?, INTERVAL 1 DAY)`;
       params.push(start, end);
     }
 

@@ -173,7 +173,7 @@ export default function InventoryPage() {
             <div className={styles.typeSelector}>
               {(['ENTRADA', 'SALIDA', 'AJUSTE'] as MovementType[]).map((option) => <button type="button" key={option} className={type === option ? styles.selectedType : ''} onClick={() => { setType(option); setAmount(option === 'AJUSTE' ? String(Number(selected.StockActual)) : ''); }}>{option === 'ENTRADA' ? 'Entrada' : option === 'SALIDA' ? 'Salida' : 'Ajuste'}</button>)}
             </div>
-            <label>{type === 'AJUSTE' ? 'Nueva existencia' : 'Cantidad'}<input type="number" min="0" step="0.001" value={amount} onChange={(event) => setAmount(event.target.value)} required autoFocus /></label>
+            <label>{type === 'AJUSTE' ? 'Nueva existencia' : 'Cantidad'}<input type="number" min="0" step="1" inputMode="numeric" value={amount} onChange={(event) => setAmount(event.target.value)} required autoFocus /></label>
             <label>Motivo<input value={reason} onChange={(event) => setReason(event.target.value)} placeholder={type === 'ENTRADA' ? 'Ej. Compra a proveedor' : type === 'SALIDA' ? 'Ej. Producto dañado' : 'Ej. Conteo físico'} required /></label>
             {error && <div className={styles.error} role="alert">{error}</div>}
             <button className={styles.saveBtn} disabled={saving}>{saving ? 'Guardando…' : 'Registrar movimiento'}</button>

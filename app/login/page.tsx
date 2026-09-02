@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, CalendarDays, LockKeyhole, UserRound } from 'lucide-react';
+import StylistAgent from '@/components/StylistAgent';
 import styles from './login.module.css';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/dizoe.salon/';
@@ -164,6 +165,7 @@ export default function LoginPage() {
         <span>© {new Date().getFullYear()} DIZOE</span>
         <span>Beauty Salon &amp; Nails · México</span>
       </footer>
+      <StylistAgent />
     </main>
   );
 }

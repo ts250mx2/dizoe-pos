@@ -65,8 +65,8 @@ async function seed() {
       IdCategoria INT,
       ArchivoImagen VARCHAR(500),
       DuracionMinutos INT NOT NULL DEFAULT 60,
-      StockActual DECIMAL(12,3) NOT NULL DEFAULT 0,
-      StockMinimo DECIMAL(12,3) NOT NULL DEFAULT 0,
+      StockActual INT NOT NULL DEFAULT 0,
+      StockMinimo INT NOT NULL DEFAULT 0,
       UnidadMedida VARCHAR(30) NOT NULL DEFAULT 'pieza',
       KEY idx_producto_categoria (IdCategoria)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
@@ -162,9 +162,9 @@ async function seed() {
       IdMovimientoInventario INT AUTO_INCREMENT PRIMARY KEY,
       IdProducto INT NOT NULL,
       TipoMovimiento VARCHAR(20) NOT NULL,
-      Cantidad DECIMAL(12,3) NOT NULL,
-      StockAnterior DECIMAL(12,3) NOT NULL,
-      StockNuevo DECIMAL(12,3) NOT NULL,
+      Cantidad INT NOT NULL,
+      StockAnterior INT NOT NULL,
+      StockNuevo INT NOT NULL,
       Motivo VARCHAR(255) NOT NULL,
       IdVenta INT NULL,
       FechaMovimiento DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -224,12 +224,16 @@ async function seed() {
   };
 
   await ensureColumn('tblCategorias', 'TipoCategoria', "VARCHAR(20) NOT NULL DEFAULT 'SERVICIO'");
-  await ensureColumn('tblProductos', 'StockActual', 'DECIMAL(12,3) NOT NULL DEFAULT 0');
-  await ensureColumn('tblProductos', 'StockMinimo', 'DECIMAL(12,3) NOT NULL DEFAULT 0');
+  await ensureColumn('tblProductos', 'StockActual', 'INT NOT NULL DEFAULT 0');
+  await ensureColumn('tblProductos', 'StockMinimo', 'INT NOT NULL DEFAULT 0');
   await ensureColumn('tblProductos', 'UnidadMedida', "VARCHAR(30) NOT NULL DEFAULT 'pieza'");
   await ensureColumn('tblProductos', 'DuracionMinutos', 'INT NOT NULL DEFAULT 60');
   await ensureColumn('tblCitas', 'IdProducto', 'INT NULL');
   await ensureColumn('tblCitas', 'Origen', "VARCHAR(20) NOT NULL DEFAULT 'INTERNO'");
+
+  // Las existencias de DIZOE se controlan por unidades completas.
+  await pool.query('ALTER TABLE tblProductos MODIFY StockActual INT NOT NULL DEFAULT 0, MODIFY StockMinimo INT NOT NULL DEFAULT 0');
+  await pool.query('ALTER TABLE tblMovimientosInventario MODIFY Cantidad INT NOT NULL, MODIFY StockAnterior INT NOT NULL, MODIFY StockNuevo INT NOT NULL');
 
   const [agendaConfigInsert] = await pool.query(`INSERT IGNORE INTO tblConfiguracionAgenda
     (Id, IntervaloMinutos, AnticipacionMinimaHoras, DiasFuturos, ReservasPublicasActivas)

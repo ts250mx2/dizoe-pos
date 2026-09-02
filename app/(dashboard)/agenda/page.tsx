@@ -30,6 +30,13 @@ const EMPTY_NEW_CLIENT = { NombreCliente: '', Telefono: '', CorreoElectronico: '
 const DAY_START_HOUR = 8;
 const DAY_END_HOUR = 21;
 
+const toLocalDateString = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export default function AgendaPage() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [citas, setCitas] = useState<Cita[]>([]);
@@ -57,7 +64,11 @@ export default function AgendaPage() {
     try {
       const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
       const monthEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-      const res = await fetch(`/api/citas?start=${monthStart.toISOString()}&end=${monthEnd.toISOString()}`);
+      const params = new URLSearchParams({
+        start: toLocalDateString(monthStart),
+        end: toLocalDateString(monthEnd),
+      });
+      const res = await fetch(`/api/citas?${params}`);
       if (res.ok) {
         const data = await res.json();
         setCitas(Array.isArray(data) ? data : []);
@@ -101,7 +112,7 @@ export default function AgendaPage() {
       setFormData({
         Titulo: cita.Titulo,
         Descripcion: cita.Descripcion || '',
-        Fecha: d.toISOString().split('T')[0],
+        Fecha: toLocalDateString(d),
         Hora: d.toTimeString().split(' ')[0].substring(0, 5),
         Duracion: cita.Duracion.toString()
       });
@@ -109,7 +120,7 @@ export default function AgendaPage() {
     } else {
       setFormData({
         Titulo: '', Descripcion: '',
-        Fecha: date ? date.toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        Fecha: toLocalDateString(date || new Date()),
         Hora: hora || '10:00', Duracion: '60'
       });
       setSelectedCliente(null);

@@ -59,9 +59,9 @@ export async function POST(request: Request) {
     const amount = Number(body.cantidad);
     const reason = String(body.motivo || '').trim();
 
-    const invalidAmount = !Number.isFinite(amount) || amount < 0 || (type !== 'AJUSTE' && amount <= 0);
+    const invalidAmount = !Number.isInteger(amount) || amount < 0 || (type !== 'AJUSTE' && amount <= 0);
     if (!MOVEMENT_TYPES.includes(type) || !Number.isInteger(productId) || invalidAmount || !reason) {
-      return NextResponse.json({ message: 'Completa tipo, cantidad y motivo del movimiento' }, { status: 400 });
+      return NextResponse.json({ message: 'La cantidad debe ser entera; en entradas y salidas debe ser mayor a cero' }, { status: 400 });
     }
 
     await connection.beginTransaction();

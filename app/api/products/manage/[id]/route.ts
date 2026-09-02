@@ -20,7 +20,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         Number(data.Multiple) || 0,
         data.ArchivoImagen || null,
         Math.max(5, Number(data.DuracionMinutos) || 60),
-        Math.max(0, Number(data.StockMinimo) || 0),
+        Math.max(0, Math.round(Number(data.StockMinimo)) || 0),
         String(data.UnidadMedida || 'pieza').trim() || 'pieza',
         id,
       ]

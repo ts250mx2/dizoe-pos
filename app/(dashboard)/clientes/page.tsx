@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { UserCheck, Plus, Search, Edit2, Trash2, X, Save } from 'lucide-react';
+import { CalendarDays, Edit2, History, Plus, ReceiptText, Save, Search, ShoppingBag, Trash2, UserCheck, X } from 'lucide-react';
 import CountryPhoneInput from '@/components/CountryPhoneInput';
 import styles from './clientes.module.css';
 
@@ -12,6 +12,21 @@ interface Cliente {
   CorreoElectronico: string;
 }
 
+interface ClientSale { IdVenta: number; Folio: string; Total: number; FechaVenta: string; Cancelada: number; Detalle: string | null; }
+interface ClientAppointment { IdCita: number; Titulo: string; Descripcion: string | null; FechaCita: string; Duracion: number; Status: number; Origen: string; }
+interface ClientHistory {
+  client: Cliente & { FechaRegistro: string };
+  summary: { purchases: number; appointments: number; totalSpent: number };
+  sales: ClientSale[];
+  appointments: ClientAppointment[];
+}
+
+const APPOINTMENT_STATUS: Record<number, { label: string; className: string }> = {
+  1: { label: 'Pendiente', className: 'statusPending' },
+  2: { label: 'Completada', className: 'statusCompleted' },
+  3: { label: 'Cancelada', className: 'statusCancelled' },
+};
+
 export default function ClientesPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +34,10 @@ export default function ClientesPage() {
   const [modal, setModal] = useState<{ open: boolean; cliente: Cliente | null }>({ open: false, cliente: null });
   const [formData, setFormData] = useState({ NombreCliente: '', Telefono: '', CorreoElectronico: '' });
   const [saving, setSaving] = useState(false);
+  const [historyClient, setHistoryClient] = useState<Cliente | null>(null);
+  const [historyData, setHistoryData] = useState<ClientHistory | null>(null);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyError, setHistoryError] = useState('');
 
   useEffect(() => {
     fetchClientes();
@@ -94,6 +113,22 @@ export default function ClientesPage() {
     }
   };
 
+  const openHistory = async (client: Cliente) => {
+    setHistoryClient(client); setHistoryData(null); setHistoryError(''); setHistoryLoading(true);
+    try {
+      const response = await fetch(`/api/clientes/${client.IdCliente}`);
+      const result = await response.json();
+      if (response.ok) setHistoryData(result);
+      else setHistoryError(result.message || 'No se pudo cargar el historial');
+    } catch { setHistoryError('No se pudo conectar para cargar el historial'); }
+    finally { setHistoryLoading(false); }
+  };
+
+  const historyEvents = historyData ? [
+    ...historyData.sales.map((sale) => ({ type: 'sale' as const, date: sale.FechaVenta, data: sale })),
+    ...historyData.appointments.map((appointment) => ({ type: 'appointment' as const, date: appointment.FechaCita, data: appointment })),
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) : [];
+
   if (loading) return <div className="flex-center" style={{ height: '100%' }}>Cargando clientes...</div>;
 
   return (
@@ -151,6 +186,7 @@ export default function ClientesPage() {
                   <td>{c.CorreoElectronico || '-'}</td>
                   <td style={{ textAlign: 'right' }}>
                     <div className={styles.actions}>
+                      <button onClick={() => void openHistory(c)} className={styles.historyBtn} title="Ver historial" aria-label={`Ver historial de ${c.NombreCliente}`}><History size={16} /></button>
                       <button onClick={() => handleOpenModal(c)} className={styles.editBtn} title="Editar">
                         <Edit2 size={16} />
                       </button>
@@ -165,6 +201,42 @@ export default function ClientesPage() {
           </tbody>
         </table>
       </div>
+
+      {historyClient && (
+        <div className={styles.historyOverlay} onClick={() => setHistoryClient(null)}>
+          <aside className={styles.historyDrawer} role="dialog" aria-modal="true" aria-labelledby="client-history-title" onClick={(event) => event.stopPropagation()}>
+            <div className={styles.historyHeader}>
+              <div className={styles.historyIdentity}>
+                <div className={styles.historyAvatar}>{historyClient.NombreCliente.charAt(0)}</div>
+                <div><span>Historial del cliente</span><h2 id="client-history-title">{historyClient.NombreCliente}</h2><p>{[historyClient.Telefono, historyClient.CorreoElectronico].filter(Boolean).join(' · ') || 'Sin datos de contacto'}</p></div>
+              </div>
+              <button type="button" className={styles.historyClose} onClick={() => setHistoryClient(null)} aria-label="Cerrar historial"><X size={20} /></button>
+            </div>
+            <div className={styles.historyContent}>
+              {historyLoading ? <div className={styles.historyState}><History size={28} /> Cargando historial...</div>
+                : historyError ? <div className={`${styles.historyState} ${styles.historyError}`}>{historyError}</div>
+                  : historyData && <>
+                    <section className={styles.historySummary} aria-label="Resumen del cliente">
+                      <article><ShoppingBag size={18} /><span>Compras</span><strong>{historyData.summary.purchases}</strong></article>
+                      <article><CalendarDays size={18} /><span>Citas</span><strong>{historyData.summary.appointments}</strong></article>
+                      <article><ReceiptText size={18} /><span>Total gastado</span><strong>{Number(historyData.summary.totalSpent).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></article>
+                    </section>
+                    <div className={styles.timelineHeader}><h3>Actividad</h3><span>{historyEvents.length} registros</span></div>
+                    {historyEvents.length === 0 ? <div className={styles.historyEmpty}><History size={30} /><strong>Aún no hay actividad</strong><span>Las compras y citas de este cliente aparecerán aquí.</span></div>
+                      : <div className={styles.timeline}>{historyEvents.map((event) => {
+                        if (event.type === 'sale') {
+                          const sale = event.data;
+                          return <article className={styles.timelineItem} key={`sale-${sale.IdVenta}`}><div className={`${styles.timelineIcon} ${styles.saleIcon}`}><ShoppingBag size={16} /></div><div className={styles.timelineCard}><div className={styles.eventTop}><div><span>Compra · Folio {sale.Folio || sale.IdVenta}</span><strong>{Number(sale.Total).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></div>{Number(sale.Cancelada) === 1 && <span className={styles.statusCancelled}>Cancelada</span>}</div><p>{sale.Detalle || 'Venta sin detalle disponible'}</p><time>{new Date(sale.FechaVenta).toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' })}</time></div></article>;
+                        }
+                        const appointment = event.data;
+                        const status = APPOINTMENT_STATUS[appointment.Status] || APPOINTMENT_STATUS[1];
+                        return <article className={styles.timelineItem} key={`appointment-${appointment.IdCita}`}><div className={`${styles.timelineIcon} ${styles.appointmentIcon}`}><CalendarDays size={16} /></div><div className={styles.timelineCard}><div className={styles.eventTop}><div><span>Cita</span><strong>{appointment.Titulo || 'Servicio sin título'}</strong></div><span className={styles[status.className]}>{status.label}</span></div><p>{appointment.Descripcion || `${appointment.Duracion || 60} minutos · ${appointment.Origen === 'PUBLICO' ? 'Reserva en línea' : 'Agendada en salón'}`}</p><time>{new Date(appointment.FechaCita).toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' })}</time></div></article>;
+                      })}</div>}
+                  </>}
+            </div>
+          </aside>
+        </div>
+      )}
 
       {modal.open && (
         <div className={styles.modalOverlay}>

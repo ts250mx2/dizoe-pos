@@ -93,7 +93,7 @@ export default function ServicesPage() {
           Precio2: Number(formData.Precio2) || 0,
           Precio3: Number(formData.Precio3) || 0,
           IdCategoria: Number(formData.IdCategoria),
-          StockMinimo: Number(formData.StockMinimo) || 0,
+          StockMinimo: Math.round(Number(formData.StockMinimo)) || 0,
           DuracionMinutos: Number(formData.DuracionMinutos) || 60,
         }),
       }
@@ -222,7 +222,7 @@ export default function ServicesPage() {
                 <div className="grid-responsive" style={{ gap: 15 }}>
                   <div className={styles.inputGroup}>
                     <label>Existencia mínima</label>
-                    <input type="number" min="0" step="0.001" value={formData.StockMinimo} onChange={(event) => setFormData({ ...formData, StockMinimo: event.target.value })} />
+                    <input type="number" min="0" step="1" inputMode="numeric" value={formData.StockMinimo} onChange={(event) => setFormData({ ...formData, StockMinimo: event.target.value })} />
                   </div>
                   <div className={styles.inputGroup}>
                     <label>Unidad de medida</label>
